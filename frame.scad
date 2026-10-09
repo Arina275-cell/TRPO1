@@ -1,47 +1,55 @@
-use <akkum18650.scad>
+use <akkum_18650.scad>
+use <contorller.scad>
 
-echo("Работа Арина Иванова");
-d_akkum=18;
-h_akkum=65;
-d_wires=1.2;
+echo("Работа Ивановой Арины!");
 
 thickness_frame = 4;
 thickness_walls = 2;
 thickness_bottom = 2;
 thickness_top = 2;
-widht_frame_window = 3;
+width_frame_window = 3;
+
+w_controller = 20;
 
 w_back = 70;
 h_back = 45;
+
 thickness_back = 1;
 h_walls = 4;
+d_wires = 1.2;
+
+d_akkum = 18;
+h_akkum = 65;
+
 gap_backlight = 1.5;
 
 kit_frame();
-//frame_debug(); 
+translate([w_back/2+w_controller/2+2*thickness_walls, 0, 0])
+kit_controller();
+//frame_debug();
 //translate([0, 0, thickness_bottom/2+thickness_top/2])
 //window_frame();
+walls();
 
 module window_frame(){
-difference() {
-    color("green")
-    cube([w_back, h_back, thickness_top], center=true);
-    color("red")
-    cube([w_back-2*widht_frame_window, h_back-2*widht_frame_window, thickness_top+1], center=true);
- }
+    difference(){
+        color("green")
+        cube([w_back, h_back, thickness_top], center = true);
+        color("red")
+        cube([w_back-width_frame_window*2, h_back-width_frame_window*2, thickness_top+1], center = true);
+    }
 }
 
-module frame_debug() {
-difference() {
+module frame_debug(){
+    difference(){
     kit_frame();
     translate([w_back/2, 0, h_walls-thickness_bottom])
-    cube([w_back, h_back+2*thickness_walls+2, 2*h_walls], center=true);
- }
+    cube([w_back, h_back+2*thickness_walls+2, h_walls*2], center = true);
+    }
 }
-    
+
 module kit_frame(){
     bottom();
-    //color("green")
     translate([0,0,h_walls/2+thickness_bottom/2])
     walls();
     wires();
