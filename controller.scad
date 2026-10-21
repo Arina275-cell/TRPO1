@@ -3,35 +3,39 @@ h_back = 45;
 w_controller = 20;
 thickness_bottom = 2;
 
-thickness_walls = 2;
 h_walls = 4;
+thickness_walls = 2;
 gap_backlight = 1.5;
 
-//controller();
+kit_controller();
 //walls();
-debug_controller
+
+// debug_controller();
 
 module debug_controller() {
-  difference() {
-    kit_controller();
-    translate([-w_controller/2, 0, h_walls/2])
-      cube([w_controller, h_back+2*thickness_walls+gap_backlight+1, 2*h_walls], center=true);
-  }
+    difference() {
+        kit_controller();
+        translate([-w_controller/2, 0, h_walls/2])
+        cube([w_controller, h_back+2*thickness_walls+gap_backlight+1, 2*h_walls], center=true);
+    }
 }
 
-module kit_controller(){
+module kit_controller() {
     controller();
     translate([0, 0, h_walls/2])
     walls();
 }
-module walls(){
-    difference(){
-        cube([w_controller+2*thickness_walls, h_back+2*thickness_walls, thickness_bottom+h_walls], center=true);
+
+module walls() {
+    difference() {
+        cube([w_controller+2*thickness_walls+gap_backlight, h_back+2*thickness_walls+gap_backlight, thickness_bottom+h_walls], center=true);
         color("red")
         cube([w_controller+gap_backlight, h_back+gap_backlight, thickness_bottom+h_walls+1], center=true);
+        translate([-w_controller-thickness_walls+gap_backlight/2-0.25, 0, 0])
+        cube([w_controller+gap_backlight, h_back+gap_backlight+2*+thickness_walls + 1, thickness_bottom+h_walls+1], center=true);
     }
 }
 
-module controller(){
-    cube([w_controller, h_back, thickness_bottom], center=true);
+module controller() {
+    cube([w_controller+gap_backlight, h_back+gap_backlight, thickness_bottom], center=true);
 }
